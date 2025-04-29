@@ -6,15 +6,16 @@ from sqlalchemy.orm import sessionmaker
 """engine	How to connect to database
 SessionLocal	Creates sessions (to make queries and transactions)
 Base	Base class to define database models (tables)"""
-SQLALCHAMY_DATABASE_URL = 'sqlite:///./blog.db'
 
-engine = create_engine(SQLALCHAMY_DATABASE_URL, connect_args={
-                       "check_same_thread": False})
+SQLALCHEMY_DATABASE_URL = 'sqlite:///./blog.db'
 
-SessionLocal = sessionmaker(bind=engine, autocommit=False, autoflush=False,)
+# Use a single engine
+engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False})
+SessionLocal = sessionmaker(bind=engine, autocommit=False, autoflush=False)
 
 Base = declarative_base()
 
+# Keep only one get_db()
 def get_db():
     db = SessionLocal()
     try:
